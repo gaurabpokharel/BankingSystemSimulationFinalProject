@@ -14,6 +14,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 
 /**
@@ -43,7 +44,17 @@ public class AccountDetailsServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		String formType = request.getParameter("formType");
+		
+		//Calling from Welcome JSP file
+		if (formType != null && formType.equals("fromWelcomeJSP")) {
+			HttpSession session = request.getSession();
+		    String storedValue = (String) session.getAttribute("storedValue");
+		    System.out.println(storedValue);
+		    response.sendRedirect("CreateAccount.jsp");
+		}
+		
+		if (formType != null && formType.equals("createAccount")) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		String fullName = request.getParameter("fullname");
 		Date dob = null;
@@ -72,5 +83,5 @@ public class AccountDetailsServlet extends HttpServlet {
 		
 		System.out.println("Account details: "+ message);
 	}
-
+	}
 }

@@ -1,5 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>	
+<%
+    // Check if the user is authenticated
+    String username = (String) session.getAttribute("storedValue");
+    if (username == null) {
+        // If not authenticated, redirect to the login page
+        response.sendRedirect("LoginPage.jsp");
+    }
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,6 +18,9 @@
 <body>
     <h1>Bank Account Application Form</h1>
     <form action="AccountDetailsServlet" method="post">
+    
+  		<input type="hidden" name="formType" value="createAccount">
+  		
         <label for="fullname">Full Name:</label>
         <input type="text" id="fullname" name="fullname" required><br><br>
 
@@ -24,7 +35,8 @@
         </select><br><br>
 		
 		<label for="username">User Name:</label>
-		<input type="text" id="username" name="username" required value=""><br><br>
+		<input type="text" id="username" name="username" required><br><br>
+
         
         <label for="email">Email:</label>
         <input type="email" id="email" name="email" required><br><br>
@@ -58,8 +70,10 @@
         <input type="submit" value="Submit">
     </form>
 </body>
-    <script>
-    var storedValue = localStorage.getItem("username");
-    document.getElementById("username").setAttribute("value", storedValue);
-	</script>
+<script>
+    var storedValue = "${sessionScope.storedValue}";
+    if (storedValue !== null && storedValue.trim() !== '') {
+        document.getElementById("username").value = storedValue;
+    }
+</script>
 </html>

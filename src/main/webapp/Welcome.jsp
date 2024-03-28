@@ -1,6 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-
+<%
+    // Check if the user is authenticated
+    String username = (String) session.getAttribute("storedValue");
+    if (username == null) {
+        // If not authenticated, redirect to the login page
+        response.sendRedirect("LoginPage.jsp");
+    }
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,10 +16,22 @@
 </head>
 <body>
 <p>${sessionScope.storedValue}</p>
-<button onclick="logout()">Logout</button><br><br>
-<a href="CreateAccount.jsp"><button>Create a bank account</button></a><br><br>
 
-<a href="DepositPage.jsp"><button>Deposit Page</button></a><br><br>
+<form action="LogoutServlet" method="post">
+    <button type="submit">Logout</button>
+</form>
+
+<form action="AccountDetailsServlet" method="post">
+    <input type="hidden" name="formType" value="fromWelcomeJSP">
+    <button type="submit">Create a bank account</button>
+</form>
+
+<form action="DepositPageServlet" method="post">
+    <input type="hidden" name="formType" value="fromWelcomeJSP">
+    <button type="submit">Deposit Page</button>
+</form>
+
+<a href="DepositPage.jsp"><button></button></a><br><br>
 
 <form action="SendMoneyServlet" method="post">
     <input type="hidden" name="formType" value="fromWelcomeJSP">
