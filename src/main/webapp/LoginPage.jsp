@@ -18,7 +18,7 @@
         </div>
         <div>
             <button type="submit">Login</button>
-            <button type="button" onclick="location.href='register.jsp'">Register</button>
+            <a href="Register.jsp">Register</a>
         </div>
     </form>
 </body>

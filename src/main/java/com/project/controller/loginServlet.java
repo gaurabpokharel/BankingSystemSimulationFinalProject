@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import com.project.dao.UserDao;
-import com.project.model.User;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -12,6 +11,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 /**
  * Servlet implementation class loginServlet
@@ -44,11 +44,21 @@ public class loginServlet extends HttpServlet {
 	String pw =request.getParameter("password");
 	UserDao userDao = new UserDao();
 	String returnValue = userDao.loginDetails(un,pw);
-	if(returnValue.equalsIgnoreCase("Success")) {
-		out.println("Login Success");
-		// Redirect to the index.jsp page after successful user creation
+	if (returnValue.equalsIgnoreCase("Success")) {
+		HttpSession session = request.getSession();
+		session.setAttribute("storedValue", un);
 		response.sendRedirect("Welcome.jsp");
-	}else {
+//	    response.setContentType("text/html");	    
+//	    out.println("<script>");
+//	    out.println("window.onload = function() {");
+//	    out.println("   window.location.href = 'Welcome.jsp';");
+//	    out.println("localStorage.setItem('username', '" + un.toString() + "');");
+//	    out.println("};");
+//	    out.println("</script>");
+	    
+	    // Close the PrintWriter
+	    out.close();
+	} else {
 		out.print("Login Failed");
 		// Include error message and forward back to the Register.jsp page
 		request.setAttribute("errorMessage", "Login Failed");
