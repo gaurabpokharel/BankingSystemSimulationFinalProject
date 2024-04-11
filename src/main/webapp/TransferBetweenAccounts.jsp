@@ -1,63 +1,61 @@
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-<%
-    String username = (String) session.getAttribute("storedValue");
-    if (username == null) {
-        response.sendRedirect("LoginPage.jsp");
-        return; // Stop further execution
-    }
-%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="ISO-8859-1">
-<title>Insert title here</title>
-</head>
-<body>
+	pageEncoding="ISO-8859-1"%>
+<div class="modal fade" id="staticBackdrop1" data-bs-backdrop="static"
+	data-bs-keyboard="false" tabindex="-1"
+	aria-labelledby="staticBackdropLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h3 class="jus">Transfer Between Account</h3>
 
-<form action="TransferBetweenAccountsServlet" method="post">
-<input type="hidden" name="formType" value="transferMoney">
-    From:
-     <select name="fromAccount">
-        <% 
-        List<String> accountTypes = (List<String>) session.getAttribute("acountType");
-        if (accountTypes != null) {
-            for (String accountType : accountTypes) {
-        %>
-        <option value="<%= accountType %>"><%= accountType %></option>
-        <%
-            }
-        }
-        %>
-    </select>
-    <br>
-    To:
-    <select name="toAccount">
-        <% 
-        if (accountTypes != null) {
-            for (String accountType : accountTypes) {
-        %>
-        <option value="<%= accountType %>"><%= accountType %></option>
-        <%
-            }
-        }
-        %>
-    </select>
-    <br>
-Amount:<input type="number" name ="transferamount">
-Date:<input type="date" id="dateInput" value="">
-<input type="submit" value="Send">
-</form>
-</body>
-<script>
-    // Get today's date
-    var today = new Date();
+				<button type="button" class="btn-close" data-bs-dismiss="modal"
+					aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<form action="TransferBetweenAccountsServlet" method="post">
+					<input type="hidden" value="transferMoney" name="formType">
+					<div class="mb-4">
+						<label class="form-label">From</label> <select class="form-select"
+							name="fromAccount" required>
+							<%
+							List<String> accountTypes = (List<String>) session.getAttribute("accountType");
+							if (accountTypes != null) {
+								for (String accountType : accountTypes) {
+							%>
+							<option value="<%=accountType%>"><%=accountType%></option>
+							<%
+							}
+							}
+							%>
 
-    // Format date to yyyy-mm-dd
-    var formattedDate = today.toISOString().substr(0, 10);
+						</select>
+					</div>
+					<div class="mb-4">
+						<label class="form-label">To</label> <select class="form-select"
+							name="toAccount">
+							<%
+							if (accountTypes != null) {
+								for (String accountType : accountTypes) {
+							%>
+							<option value="<%=accountType%>">
+								<%=accountType%>
+							</option>
+							<%
+							}
+							}
+							%>
+						</select>
+					</div>
+					<div class="mb-4">
+						<label>Amount to transfer</label> <input type="number"
+							name="transferamount" class="form-control" />
+					</div>
 
-    // Set the input field value to today's date
-    document.getElementById("dateInput").value = formattedDate;
-</script>
-</html>
+					<button type="submit" value="Send" class="btn btn-primary">
+						Send</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

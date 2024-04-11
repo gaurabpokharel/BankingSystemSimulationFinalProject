@@ -10,20 +10,22 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;	
+import jakarta.servlet.http.HttpSession;
+
 
 /**
- * Servlet implementation class TransferBetweenAccountsServlet
+ * Servlet implementation class WithdrawAmountServlet
  */
-@WebServlet("/TransferBetweenAccountsServlet")
-public class TransferBetweenAccountsServlet extends HttpServlet {
-	AccountDetailsDao accountDetailsDao = new AccountDetailsDao();
+@WebServlet("/WithdrawAmountServlet")
+public class WithdrawAmountServlet extends HttpServlet {
+
+	AccountDetailsDao accountDetailsDao= new AccountDetailsDao();
 	private static final long serialVersionUID = 1L;
 
     /**
      * Default constructor. 
      */
-    public TransferBetweenAccountsServlet() {
+    public WithdrawAmountServlet() {
         // TODO Auto-generated constructor stub
     }
 
@@ -44,22 +46,17 @@ public class TransferBetweenAccountsServlet extends HttpServlet {
 		String formType = request.getParameter("formType");
 
 		if (formType != null && formType.equals("fromWelcomeJSP")) {
-	    List<String> accountType = accountDetailsDao.getAccountType(storedValue);
-	    session.setAttribute("accountType",accountType);
-	    session.setAttribute("showModal", true);
+	    session.setAttribute("showModal3", true);
 	    response.sendRedirect("Welcome.jsp");
 		}
 		
-		if (formType != null && formType.equals("transferMoney")) {
-			String fromAccountType = request.getParameter("fromAccount");
-			String toAccountType =  request.getParameter("toAccount");
-			Float transferAmount = Float.valueOf(request.getParameter("transferamount"));
-			String message = accountDetailsDao.increaseAccountTypeAmount(storedValue, toAccountType, transferAmount);
-			message = accountDetailsDao.decreaseAccountTypeAmount(storedValue, fromAccountType, transferAmount);
-			response.sendRedirect("Welcome.jsp");
+		if (formType != null && formType.equals("withdrawAmount")) {
+		String username = request.getParameter("username");
+		String accountType = request.getParameter("accountType");
+		Float amount = Float.valueOf(request.getParameter("withdrawAmount"));
+		String msg = accountDetailsDao.decreaseAccountTypeAmount(username, accountType, amount);
+		response.sendRedirect("Welcome.jsp");
 		}
-		
-		
 	}
 
 }

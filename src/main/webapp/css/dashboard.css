@@ -1,0 +1,162 @@
+.dashboard-container {
+  padding: 0rem 5rem 0rem 5rem;
+  display: flex;
+  width: 100%;
+  gap:7rem;
+}
+.left-nav {
+  margin-left: 5rem;
+}
+.left-wrapper {
+  width: 55%;
+}
+.right-wrapper {
+  width: 40%;
+}
+.totalamount {
+  font-size: 3rem;
+  letter-spacing: 0.5rem;
+}
+.increase_amount {
+  margin-top: -0.5rem;
+  color: rgba(19, 133, 19, 0.783);
+}
+.my_account {
+  padding-top: 2rem;
+}
+.my_account_header {
+  display: flex;
+  flex: 1;
+  justify-content: space-between;
+}
+.btn {
+  height: 2rem;
+  outline: none;
+  border-radius: 1rem;
+  width: auto;
+  background-color: white;
+  border-color: transparent;
+  border-bottom-style: solid;
+  border-left-style: solid;
+  font-size: 1.2rem;
+  padding: 1rem;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px,
+    rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+}
+.btn a {
+  text-decoration: none;
+  list-style-type: none;
+  color: black;
+}
+.account_btn {
+  width: 100%;
+  height: 5rem;
+  border-radius: 0.5rem;
+  border-color: none;
+  background-color: white;
+  white-space: nowrap;
+  display: inline-flex;
+  padding: 0.75rem;
+  transition: all 200ms;
+  cursor: pointer;
+  justify-content: space-between;
+  align-items: center;
+  border: none;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  margin-bottom: 1.2rem;
+}
+.account_btn:hover {
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.account_name,
+.account_amount {
+  flex: 1;
+  text-align: left;
+}
+.account_amount {
+  text-align: right;
+}
+
+.account_btn:focus {
+  outline: none;
+}
+.action_btn {
+  color: black;
+  background-color: white;
+  font-weight: 500;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  line-height: 2rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  padding-top: 0.7rem;
+  padding-bottom: 0.7rem;
+  cursor: pointer;
+  text-align: center;
+  margin-right: 0.5rem;
+  display: inline-flex;
+  align-items: center;
+  border: none;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px,
+    rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+}
+.fa-plus {
+  margin-right: 0.5rem;
+}
+.btn-container {
+  display: grid;
+    grid-template-columns: 1fr 1fr;
+   grid-row-gap: 2rem;
+    grid-column-gap: 2rem;
+}
+.row-gap{
+	display: grid;
+    grid-row-gap: 2rem;
+    width:auto;
+}
+.extra_space {
+  width: 17rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+.button_content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.button_content i {
+  margin-bottom: 0.5rem;
+}
+.transaction-history{
+	width:auto;
+	margin-top:2rem;
+	padding:1rem;
+   
+}
+
+.transaction-wrapper{
+	height:auto;
+	width:100%;
+	border-radius: 0.5rem;
+    border-color: none;
+    background-color: white;
+    white-space: nowrap;
+    display: inline-flex;
+    padding: 0.75rem;
+    transition: all 200ms;
+    cursor: pointer;
+    justify-content: space-between;
+    align-items: center;
+    border: none;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+       margin-bottom: 1.2rem;
+}
+

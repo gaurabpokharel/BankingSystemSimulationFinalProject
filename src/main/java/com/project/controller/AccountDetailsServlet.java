@@ -45,7 +45,6 @@ public class AccountDetailsServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String formType = request.getParameter("formType");
-		
 		//Calling from Welcome JSP file
 		if (formType != null && formType.equals("fromWelcomeJSP")) {
 			HttpSession session = request.getSession();
@@ -80,7 +79,7 @@ public class AccountDetailsServlet extends HttpServlet {
 				email, sin, street, building, postalCode, accountType, initalDeposit, sourceOfFunds);
 		
 		String message = accountDetailsDao.saveAccount(accountDetails);
-		
+		response.sendRedirect("Welcome.jsp");
 		System.out.println("Account details: "+ message);
 	}
 	}

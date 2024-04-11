@@ -5,14 +5,15 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.project.model.AccountDetails;
 
 public class AccountDetailsDao {
 
 	public String saveAccount(AccountDetails accountDetails) {
-
 		try (Connection con = DatabaseConnectivity.getConnection()) {
 			if (con != null) {
 				try (PreparedStatement ps = con.prepareStatement(
@@ -148,7 +149,6 @@ public class AccountDetailsDao {
 					ResultSet rs = ps.executeQuery();
 					while (rs.next()) {
 						String account = rs.getString("account_type");
-						System.out.println(account);
 						accountTypes.add(account);
 					}
 				}
@@ -207,6 +207,7 @@ public class AccountDetailsDao {
 					if (rs.next()) {
 						float depositAmount = rs.getFloat("initial_deposit");
 						float newAmount = depositAmount - amount;
+						System.out.println(newAmount);
 						try (PreparedStatement updatePs = con.prepareStatement(
 								"UPDATE account_details SET initial_deposit = ? WHERE account_type = ? AND username = ?")) {
 							updatePs.setFloat(1, newAmount);
@@ -229,6 +230,27 @@ public class AccountDetailsDao {
 		}
 
 		return "Failed";
+	}
+	
+	public HashMap<String,Float> getAccountTypeAndBalance(String username) {
+		HashMap<String,Float> accountTypes = new HashMap();
+		try (Connection con = DatabaseConnectivity.getConnection()) {
+			if (con != null) {
+				try (PreparedStatement ps = con
+						.prepareStatement("SELECT account_type,initial_deposit FROM account_details WHERE username = ? ")) {
+					ps.setString(1, username);
+					ResultSet rs = ps.executeQuery();
+					while (rs.next()) {
+						String account = rs.getString("account_type");
+						Float amount = rs.getFloat("initial_deposit");
+						accountTypes.put(account,amount);
+					}
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return accountTypes;
 	}
 
 }
