@@ -1,3 +1,6 @@
+<%@page import="java.sql.Date"%>
+<%@page import="com.project.model.TransactionDetails"%>
+<%@page import="com.project.dao.TransactionDetailsDao"%>
 <%@page import="java.util.Map"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="com.project.dao.AccountDetailsDao"%>
@@ -177,31 +180,32 @@ if (username == null) {
 				</div>
 			</div>
 			
-			<div class="transaction-history">
-				<h2>Transaction History</h2>
-				<div class="transcation-container">
+<div class="transaction-history">
+    <h2>Transaction History</h2>
+    <div class="transaction-container">
+        <%
+            TransactionDetailsDao dao1 = new TransactionDetailsDao();
+            List<TransactionDetails> transactionList = dao1.getAllTransactionDetails(username);
+            for (TransactionDetails transaction : transactionList) {
+                String fromUsername = transaction.getFromUserName();
+                Date transactionDate = transaction.getTransactionDate();
+                float amount = transaction.getAmount();
+        %>
+        <div class="transaction-wrapper">
+            <div class="left-container">
+                <h5>From: <%= fromUsername %></h5>
+                <h5><%= transactionDate %></h5> <!-- Adjust date formatting as needed -->
+            </div>
+            <div class="right-container">
+                <h4>$<%= amount %></h4>
+            </div>
+        </div>
+        <%
+            }
+        %>
+    </div>
+</div>
 
-					<div class="transaction-wrapper">
-						<div class="left-container">
-							<h5>To: Sakar thapa</h5>
-							<h5>March 15</h5>
-						</div>
-						<div class="right-container">
-							<h4>$2000</h4>
-						</div>
-
-					</div>
-					<div class="transaction-wrapper">
-						<div class="left-container">
-							<h5>To: Sakar thapa</h5>
-							<h5>March 15</h5>
-						</div>
-						<div class="right-container">
-							<h4>$2000</h4>
-						</div>
-					</div>
-				</div>
-			</div>
 			
 		</div>
 	</div>

@@ -2,9 +2,11 @@ package com.project.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
-import com.project.model.AccountDetails;
 import com.project.model.TransactionDetails;
 
 public class TransactionDetailsDao {
@@ -30,4 +32,28 @@ public class TransactionDetailsDao {
 		}
 		return "Failed";
 	}
+	
+	public List<TransactionDetails> getAllTransactionDetails(String userName) {
+        List<TransactionDetails> transactionList = new ArrayList<>();
+        try (Connection con = DatabaseConnectivity.getConnection()) {
+            if (con != null) {
+                try (PreparedStatement ps = con.prepareStatement(
+                        "SELECT * FROM transaction_details where to_username = ?")) {
+                	ps.setString(1, userName);
+                    ResultSet rs = ps.executeQuery();
+                    while (rs.next()) {
+                        TransactionDetails transaction = new TransactionDetails();
+                        transaction.setFromUserName(rs.getString("from_username"));
+                        transaction.setToUserName(rs.getString("to_username"));
+                        transaction.setAmount(rs.getFloat("amount"));
+                        transaction.setTransactionDate(rs.getDate("transaction_date"));
+                        transactionList.add(transaction);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return transactionList;
+    }
 }
