@@ -43,7 +43,17 @@ if (username == null) {
 </head>
 <body>
 
-
+<%
+String error = (String) request.getAttribute("error");
+if (error != null) {
+%>
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <%= error %>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+<%
+}
+%>
 
 	<nav class="nav">
 		<div class="left-nav">
@@ -61,13 +71,11 @@ if (username == null) {
 			</ul>
 		</div>
 	</nav>
-
-
 	<div class="dashboard-container">
 		<div class="left-wrapper">
 			<div class="left-header">
-				<h1 class="totalamount">$1000,000</h1>
-				<h3 class="increase_amount">+12% of all time</h3>
+				<h2 class="totalamount">
+					Total Balance: $<%=AccountDetailsDao.getTotalBalance(username)%></h2>
 				<div>
 					<h1 id="time"></h1>
 					<canvas id="myChart"></canvas>
@@ -165,7 +173,7 @@ if (username == null) {
 					</form>
 				</div>
 				<div class="row row-gap">
-					<form action="" method="post">
+					<form action="PayUtilitiesServlet" method="post">
 						<input type="hidden" name="formType" value="fromWelcomeJSP">
 						<button type="submit" class="action_btn extra_space"
 							data-bs-toggle="modal" data-bs-target="#staticBackdrop4">
@@ -179,34 +187,66 @@ if (username == null) {
 					</form>
 				</div>
 			</div>
-			
-<div class="transaction-history">
-    <h2>Transaction History</h2>
-    <div class="transaction-container">
-        <%
-            TransactionDetailsDao dao1 = new TransactionDetailsDao();
-            List<TransactionDetails> transactionList = dao1.getAllTransactionDetails(username);
-            for (TransactionDetails transaction : transactionList) {
-                String fromUsername = transaction.getFromUserName();
-                Date transactionDate = transaction.getTransactionDate();
-                float amount = transaction.getAmount();
-        %>
-        <div class="transaction-wrapper">
-            <div class="left-container">
-                <h5>From: <%= fromUsername %></h5>
-                <h5><%= transactionDate %></h5> <!-- Adjust date formatting as needed -->
-            </div>
-            <div class="right-container">
-                <h4>$<%= amount %></h4>
-            </div>
-        </div>
-        <%
-            }
-        %>
-    </div>
-</div>
 
-			
+			<div class="transaction-history">
+				<h2>Transaction History</h2>
+				<h3>Received</h3>
+				<div class="transaction-container">
+					<%
+					TransactionDetailsDao dao1 = new TransactionDetailsDao();
+					List<TransactionDetails> transactionList = dao1.getAllTransactionDetails(username);
+					for (TransactionDetails transaction : transactionList) {
+						String fromUsername = transaction.getFromUserName();
+						Date transactionDate = transaction.getTransactionDate();
+						float amount = transaction.getAmount();
+					%>
+					<div class="transaction-wrapper">
+						<div class="left-container">
+							<h5>
+								From:
+								<%=fromUsername%></h5>
+							<h5><%=transactionDate%></h5>
+							<!-- Adjust date formatting as needed -->
+						</div>
+						<div class="right-container">
+							<h4>
+								$<%=amount%></h4>
+						</div>
+					</div>
+					<%
+					}
+					%>
+				</div>
+
+				<h3>Send</h3>
+				<div class="transaction-container">
+					<%
+					transactionList = dao1.getAllToTransactionDetails(username);
+					for (TransactionDetails transaction : transactionList) {
+						String toUsername = transaction.getToUserName();
+						Date transactionDate = transaction.getTransactionDate();
+						float amount = transaction.getAmount();
+					%>
+					<div class="transaction-wrapper">
+						<div class="left-container">
+							<h5>
+								To :
+								<%=toUsername%></h5>
+							<h5><%=transactionDate%></h5>
+							<!-- Adjust date formatting as needed -->
+						</div>
+						<div class="right-container">
+							<h4>
+								- $<%=amount%></h4>
+						</div>
+					</div>
+					<%
+					}
+					%>
+				</div>
+			</div>
+
+
 		</div>
 	</div>
 	<script>
@@ -248,6 +288,16 @@ if (username == null) {
 						.getElementById('staticBackdrop3'));
 				myModal3.show();
 	<%session.setAttribute("showModal3", false);%>
+		});
+		}
+		
+		 var showModal4 = "<%=session.getAttribute("showModal4")%>";
+		if (showModal4 && showModal4 === "true") {
+			window.addEventListener('load', function() {
+				var myModal4 = new bootstrap.Modal(document
+						.getElementById('staticBackdrop4'));
+				myModal4.show();
+	<%session.setAttribute("showModal4", false);%>
 		});
 		}
 	</script>

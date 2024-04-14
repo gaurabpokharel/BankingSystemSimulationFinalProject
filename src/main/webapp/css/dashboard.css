@@ -29,6 +29,16 @@
   flex: 1;
   justify-content: space-between;
 }
+
+.invalid-feedback{
+	 display: none;
+    color: red;
+    position: relative;
+    top: -17px;
+    right: 0;
+    transform: translateY(100%);
+    font-size: 12px;
+}
 .btn {
   height: 2rem;
   outline: none;

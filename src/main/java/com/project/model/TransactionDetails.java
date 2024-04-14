@@ -8,6 +8,7 @@ public class TransactionDetails {
 	private String toUserName;
 	private float amount;
 	private Date transactionDate;
+	
 	public String getFromUserName() {
 		return fromUserName;
 	}

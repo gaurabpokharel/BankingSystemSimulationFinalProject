@@ -10,6 +10,7 @@ import com.project.dao.AccountDetailsDao;
 import com.project.dao.TransactionDetailsDao;
 import com.project.model.TransactionDetails;
 
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -75,12 +76,20 @@ public class SendMoneyServlet extends HttpServlet {
 			String receiverusername = request.getParameter("receiverusername");
 			String receiveremail = request.getParameter("receiveremail");
 			float receiveramount = Float.valueOf(request.getParameter("receiveramount"));
-			String message = accountDetailsDao.increaseReceiverAmount(receiverusername, receiveremail, receiveramount);
-			message = accountDetailsDao.decreaseSenderAmount(storedValue, receiveramount);
-			TransactionDetails transactionDetails = new TransactionDetails(storedValue,receiverusername,receiveramount,date);
-			message = transactionDetailsDao.saveTransctionDetails(transactionDetails);
-			request.setAttribute("message", message);
-			response.sendRedirect("Welcome.jsp");
+			//check username and email exist
+			if(accountDetailsDao.isUserNameEmailExist(receiverusername,receiveremail)) {
+				String message = accountDetailsDao.increaseReceiverAmount(receiverusername, receiveremail, receiveramount);
+				message = accountDetailsDao.decreaseSenderAmount(storedValue, receiveramount);
+				TransactionDetails transactionDetails = new TransactionDetails(storedValue,receiverusername,receiveramount,date);
+				message = transactionDetailsDao.saveTransctionDetails(transactionDetails);
+				response.sendRedirect("Welcome.jsp");
+			}
+			else {
+				  request.setAttribute("error", "Unable to transfer the money. Please check if the username or email is correct");
+		            RequestDispatcher dispatcher = request.getRequestDispatcher("Welcome.jsp");
+		            dispatcher.forward(request, response);
+			}
+
 		}
 
 	}

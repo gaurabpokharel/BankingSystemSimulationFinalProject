@@ -1,0 +1,37 @@
+-- Create bank_db database
+CREATE DATABASE IF NOT EXISTS bank_db;
+
+-- Switch to bank_db database
+USE bank_db;
+
+-- Create account_details table
+CREATE TABLE IF NOT EXISTS account_details (
+    full_name VARCHAR(255),
+    dob DATE,
+    gender VARCHAR(10),
+    username VARCHAR(50),
+    email VARCHAR(100),
+    sin VARCHAR(20),
+    street VARCHAR(20),
+    building VARCHAR(50),
+    postal_code VARCHAR(20),
+    account_type VARCHAR(20),
+    initial_deposit FLOAT,
+    source_of_funds VARCHAR(50)
+);
+
+-- Create transaction_details table
+CREATE TABLE IF NOT EXISTS transaction_details (
+    from_userName VARCHAR(50),
+    to_userName VARCHAR(50),
+    amount FLOAT,
+    transaction_date DATE
+);
+
+-- Create user table
+CREATE TABLE IF NOT EXISTS user (
+    UserName VARCHAR(50),
+    Password VARCHAR(100),
+    Email VARCHAR(100),
+    PhoneNumber VARCHAR(20)
+);

@@ -87,6 +87,16 @@ li {
   background-color: rgb(150, 193, 150);
   cursor: pointer;
 }
+.invalid-feedback{
+	 display: none;
+    color: red;
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translateY(100%);
+    font-size: 12px;
+}
+
 h4 {
   display: flex;
   justify-content: center;

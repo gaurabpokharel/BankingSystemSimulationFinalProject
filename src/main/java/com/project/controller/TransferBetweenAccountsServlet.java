@@ -1,10 +1,12 @@
 package com.project.controller;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 
 import com.project.dao.AccountDetailsDao;
 
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -54,9 +56,22 @@ public class TransferBetweenAccountsServlet extends HttpServlet {
 			String fromAccountType = request.getParameter("fromAccount");
 			String toAccountType =  request.getParameter("toAccount");
 			Float transferAmount = Float.valueOf(request.getParameter("transferamount"));
-			String message = accountDetailsDao.increaseAccountTypeAmount(storedValue, toAccountType, transferAmount);
-			message = accountDetailsDao.decreaseAccountTypeAmount(storedValue, fromAccountType, transferAmount);
-			response.sendRedirect("Welcome.jsp");
+			try {
+				Float availableAmountInFromAccountType = accountDetailsDao.getAccountBalanceInAccountType(storedValue,fromAccountType);
+				if(availableAmountInFromAccountType >= transferAmount) {
+				String message = accountDetailsDao.increaseAccountTypeAmount(storedValue, toAccountType, transferAmount);
+				message = accountDetailsDao.decreaseAccountTypeAmount(storedValue, fromAccountType, transferAmount);
+				response.sendRedirect("Welcome.jsp");
+				}
+				else {
+					  request.setAttribute("error", "Insufficient balance in the selected account.");
+			            RequestDispatcher dispatcher = request.getRequestDispatcher("Welcome.jsp");
+			            dispatcher.forward(request, response);
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		
 		

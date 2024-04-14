@@ -68,6 +68,30 @@ public class AccountDetailsDao {
 
 		return amount;
 	}
+	
+	public float getAccountBalanceInAccountType(String username, String accountType) throws SQLException {
+		float amount = 0.0f;
+		try (Connection con = DatabaseConnectivity.getConnection()) {
+			if (con != null) {
+				try (PreparedStatement ps = con.prepareStatement(
+						"SELECT initial_deposit FROM account_details WHERE account_type=? AND username = ?")) {
+					ps.setString(1, accountType);
+					ps.setString(2, username);
+					ResultSet rs = ps.executeQuery();
+					if (rs.next()) {
+						amount = rs.getFloat("initial_deposit");
+					} else {
+						System.out.println("No record is found");
+					}
+				}
+
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return amount;
+	}
 
 	public String increaseReceiverAmount(String username, String email, float amount) {
 		System.out.println(username);
@@ -252,5 +276,37 @@ public class AccountDetailsDao {
 		}
 		return accountTypes;
 	}
-
+	
+	public static String getTotalBalance(String username) {
+        AccountDetailsDao dao = new AccountDetailsDao();
+        HashMap<String, Float> accountTypesAndBalances = dao.getAccountTypeAndBalance(username);
+        float totalBalance = 0.0f;
+        for (Map.Entry<String, Float> entry : accountTypesAndBalances.entrySet()) {
+            totalBalance += entry.getValue();
+        }
+        return String.format("%.2f", totalBalance); 
+    }
+	
+		public Boolean isUserNameEmailExist(String username, String email) {
+			try (Connection con = DatabaseConnectivity.getConnection()) {
+				if (con != null) {
+					try (PreparedStatement ps = con.prepareStatement(
+							"SELECT * FROM account_details WHERE username = ? AND email = ? AND account_type = 'checking' ")) {
+						ps.setString(1, username);
+						ps.setString(2, email);
+						ResultSet rs = ps.executeQuery();
+						if (rs.next()) {
+							return true;
+						} else {
+							System.out.println("No record is found");
+						}
+					}
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+	
+			return false;
+		}
+	
 }

@@ -56,4 +56,28 @@ public class TransactionDetailsDao {
         }
         return transactionList;
     }
+	
+	public List<TransactionDetails> getAllToTransactionDetails(String userName) {
+        List<TransactionDetails> transactionList = new ArrayList<>();
+        try (Connection con = DatabaseConnectivity.getConnection()) {
+            if (con != null) {
+                try (PreparedStatement ps = con.prepareStatement(
+                        "SELECT * FROM transaction_details where from_username = ?")) {
+                	ps.setString(1, userName);
+                    ResultSet rs = ps.executeQuery();
+                    while (rs.next()) {
+                        TransactionDetails transaction = new TransactionDetails();
+                        transaction.setFromUserName(rs.getString("from_username"));
+                        transaction.setToUserName(rs.getString("to_username"));
+                        transaction.setAmount(rs.getFloat("amount"));
+                        transaction.setTransactionDate(rs.getDate("transaction_date"));
+                        transactionList.add(transaction);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return transactionList;
+    }
 }
