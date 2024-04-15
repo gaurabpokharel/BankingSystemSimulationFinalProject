@@ -1,3 +1,5 @@
+<!-- Ajay Shrestha (C0885384) Gaurab Pokharel (C0886046) Nirajan Karki (C0885390) Sakar Thapa (C0890972) -->
+
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -60,7 +62,7 @@
 				String errorMessage = (String) request.getAttribute("errorMessage");
 				if (errorMessage != null) {
 				%>
-				<div class="error-message">
+				<div class="error-message" style="color: red;">
 					<%=errorMessage%>
 				</div>
 				<%

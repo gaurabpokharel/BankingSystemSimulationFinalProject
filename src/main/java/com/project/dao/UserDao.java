@@ -32,6 +32,8 @@ public class UserDao {
         }
         return "Failed";
     }
+    
+    //Method to check the user validation
     public String loginDetails(String username, String password) {
         // Create a new database connection
         try (Connection con = DatabaseConnectivity.getConnection()) {

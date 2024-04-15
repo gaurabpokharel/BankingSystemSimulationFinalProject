@@ -13,6 +13,7 @@ import com.project.model.AccountDetails;
 
 public class AccountDetailsDao {
 
+	//Method to save account details in database
 	public String saveAccount(AccountDetails accountDetails) {
 		try (Connection con = DatabaseConnectivity.getConnection()) {
 			if (con != null) {
@@ -46,6 +47,7 @@ public class AccountDetailsDao {
 
 	}
 
+	//Method to get account balance according with the username
 	public float getAccountBalance(String username) throws SQLException {
 		float amount = 0.0f;
 		try (Connection con = DatabaseConnectivity.getConnection()) {
@@ -69,6 +71,7 @@ public class AccountDetailsDao {
 		return amount;
 	}
 	
+	//Method to get account balance according to account type
 	public float getAccountBalanceInAccountType(String username, String accountType) throws SQLException {
 		float amount = 0.0f;
 		try (Connection con = DatabaseConnectivity.getConnection()) {
@@ -93,6 +96,7 @@ public class AccountDetailsDao {
 		return amount;
 	}
 
+	//Method to increase the amount in receiver account in checking account type
 	public String increaseReceiverAmount(String username, String email, float amount) {
 		System.out.println(username);
 		System.out.println(email);
@@ -130,6 +134,7 @@ public class AccountDetailsDao {
 		return "Failed";
 	}
 
+	//Method to decrease  the amount in sender account in checking account type
 	public String decreaseSenderAmount(String username, float amount) {
 		try (Connection con = DatabaseConnectivity.getConnection()) {
 			if (con != null) {
@@ -163,6 +168,7 @@ public class AccountDetailsDao {
 		return "Failed";
 	}
 
+	//Method to reterieve all the account type list according to the username
 	public List<String> getAccountType(String username) {
 		List<String> accountTypes = new ArrayList<>();
 		try (Connection con = DatabaseConnectivity.getConnection()) {
@@ -185,6 +191,7 @@ public class AccountDetailsDao {
 		return accountTypes;
 	}
 
+	//Method to increase balance in account type
 	public String increaseAccountTypeAmount(String username, String accountType, float amount) {
 		try (Connection con = DatabaseConnectivity.getConnection()) {
 			if (con != null) {
@@ -220,6 +227,7 @@ public class AccountDetailsDao {
 		return "Failed";
 	}
 
+	//Method to decrease balance in account type 
 	public String decreaseAccountTypeAmount(String username, String accountType, float amount) {
 		try (Connection con = DatabaseConnectivity.getConnection()) {
 			if (con != null) {
@@ -256,6 +264,7 @@ public class AccountDetailsDao {
 		return "Failed";
 	}
 	
+	//Method to get account type with it's balance
 	public HashMap<String,Float> getAccountTypeAndBalance(String username) {
 		HashMap<String,Float> accountTypes = new HashMap();
 		try (Connection con = DatabaseConnectivity.getConnection()) {
@@ -277,6 +286,7 @@ public class AccountDetailsDao {
 		return accountTypes;
 	}
 	
+	//Method to get total balance of the user
 	public static String getTotalBalance(String username) {
         AccountDetailsDao dao = new AccountDetailsDao();
         HashMap<String, Float> accountTypesAndBalances = dao.getAccountTypeAndBalance(username);

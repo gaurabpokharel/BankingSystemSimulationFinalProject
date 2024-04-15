@@ -1,3 +1,4 @@
+<!-- Ajay Shrestha (C0885384) Gaurab Pokharel (C0886046) Nirajan Karki (C0885390) Sakar Thapa (C0890972) -->
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <div class="modal fade" id="exampleModal" tabindex="-1"
@@ -79,6 +80,7 @@
 							<option value="savings">Savings Account</option>
 							<option value="ts">Traditional Savings</option>
 							<option value="cd">Certificate of Deposit (CD)</option>
+							<option value="tfsa">Tax-Free Saving Account(TFSA)</option>
 						</select>
 					</div>
 					<div class="mb-3">

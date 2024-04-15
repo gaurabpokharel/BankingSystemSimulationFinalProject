@@ -2,6 +2,7 @@ package com.project.model;
 
 import java.sql.Date;
 
+//TransactionDetails bean with getter setter and constructor
 public class TransactionDetails {
 
 	private String fromUserName;

@@ -10,6 +10,7 @@ import java.util.List;
 import com.project.model.TransactionDetails;
 
 public class TransactionDetailsDao {
+	//Method to save transaction details in the database
 	public String saveTransctionDetails(TransactionDetails transactionDetails) {
 		try (Connection con = DatabaseConnectivity.getConnection()) {
 			if (con != null) {
@@ -33,6 +34,7 @@ public class TransactionDetailsDao {
 		return "Failed";
 	}
 	
+	//Method to get all transaction details
 	public List<TransactionDetails> getAllTransactionDetails(String userName) {
         List<TransactionDetails> transactionList = new ArrayList<>();
         try (Connection con = DatabaseConnectivity.getConnection()) {

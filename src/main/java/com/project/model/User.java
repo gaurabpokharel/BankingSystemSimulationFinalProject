@@ -1,6 +1,7 @@
 package com.project.model;
 import java.util.Base64;
 
+//User bean with getter setter and constructor
 public class User {
 
 	Base64.Encoder encoder = Base64.getEncoder();
