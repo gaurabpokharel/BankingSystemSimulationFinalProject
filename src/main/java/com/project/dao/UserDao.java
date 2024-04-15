@@ -8,6 +8,7 @@ import java.util.Base64;
 
 import com.project.model.User;
 
+//Author:Ajay Shrestha (C0885384) Gaurab Pokharel (C0886046) Nirajan Karki (C0885390) Sakar Thapa (C0890972)
 public class UserDao {
     // This method is responsible for saving a user to the database
     public String save(User user) {

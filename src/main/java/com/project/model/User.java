@@ -2,6 +2,7 @@ package com.project.model;
 import java.util.Base64;
 
 //User bean with getter setter and constructor
+//Author:Ajay Shrestha (C0885384) Gaurab Pokharel (C0886046) Nirajan Karki (C0885390) Sakar Thapa (C0890972)
 public class User {
 
 	Base64.Encoder encoder = Base64.getEncoder();
